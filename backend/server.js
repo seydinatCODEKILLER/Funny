@@ -4,10 +4,19 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import configureSocket from "./config/socket.js";
+import authRouter from "./routes/authRoute.js";
 
+//Variables
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+
+// Middlewares
+app.use(express.json());
+app.use(cors());
+
+//Routes
+app.use("/api/auth", authRouter);
 
 const startServer = async () => {
   try {
