@@ -5,6 +5,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import configureSocket from "./config/socket.js";
 import authRouter from "./routes/authRoute.js";
+import quizzRouter from "./routes/quizzRoute.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 //Variables
@@ -18,6 +19,7 @@ app.use(cors());
 
 //Routes
 app.use("/api/auth", authRouter);
+app.use("/api/quizz", quizzRouter);
 
 //Middleware d'erreur
 app.use(errorMiddleware);
