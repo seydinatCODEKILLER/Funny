@@ -11,6 +11,7 @@ export const useAuthStore = create(
         set({
           user: userData,
           token,
+          loading: false,
         }),
       logout: () =>
         set({

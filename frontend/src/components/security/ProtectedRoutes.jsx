@@ -9,7 +9,9 @@ const ProtectedRoutes = ({ children }) => {
   const { token, loading } = useAuthStore();
   const { handleFetchUser } = useFetchUser();
   useEffect(() => {
-    handleFetchUser(token);
+    if (token) {
+      handleFetchUser(token);
+    }
   }, [token]);
   if (loading) {
     return (

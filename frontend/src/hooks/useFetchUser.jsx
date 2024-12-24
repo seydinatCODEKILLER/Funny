@@ -6,6 +6,8 @@ const useFetchUser = () => {
 
   const handleFetchUser = async (token) => {
     setLoading(true);
+
+    setLoading(true);
     try {
       const userData = await fetchUser(token);
       login(userData, token);
