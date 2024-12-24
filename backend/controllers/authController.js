@@ -10,13 +10,18 @@ export const registerUser = async (req, res, next) => {
     if (existingUser) {
       return next(errorHandler(400, "Cet email est déjà utilisé"));
     }
-    const hashedPasword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
       email,
-      password: hashedPasword,
+      password: hashedPassword,
     });
-    res.status(201).json(newUser);
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role },
+      process.env.TOKEN_KEY,
+      { expiresIn: "1h" }
+    );
+    res.status(201).json({ message: "Inscription reussit", newUser, token });
   } catch (error) {
     next(error);
   }

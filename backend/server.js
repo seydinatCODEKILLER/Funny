@@ -7,15 +7,20 @@ import configureSocket from "./config/socket.js";
 import authRouter from "./routes/authRoute.js";
 import quizzRouter from "./routes/quizzRoute.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import { fileURLToPath } from "url";
+import path from "path";
 
 //Variables
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //Routes
 app.use("/api/auth", authRouter);
