@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import configureSocket from "./config/socket.js";
 import authRouter from "./routes/authRoute.js";
 import quizzRouter from "./routes/quizzRoute.js";
+import userRouter from "./routes/userRoute.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -25,6 +26,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //Routes
 app.use("/api/auth", authRouter);
 app.use("/api/quizz", quizzRouter);
+app.use("/api/users", userRouter);
 
 //Middleware d'erreur
 app.use(errorMiddleware);

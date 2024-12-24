@@ -6,6 +6,7 @@ export const useAuthStore = create(
     (set) => ({
       user: null,
       token: null,
+      loading: true,
       login: (userData, token) =>
         set({
           user: userData,
@@ -16,6 +17,7 @@ export const useAuthStore = create(
           user: null,
           token: null,
         }),
+      setLoading: (isLoading) => set({ loading: isLoading }),
     }),
     {
       name: "auth-store",
