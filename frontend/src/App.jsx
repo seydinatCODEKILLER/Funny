@@ -9,10 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ProtectedRoutes from "./components/security/ProtectedRoutes";
-import Dashboard from "./pages/Dashboard";
-import Home from "./pages/DashboardPage/Home";
-import Room from "./pages/DashboardPage/Room";
-import Profile from "./pages/DashboardPage/Profile";
+import Dashboard from "./Layout/Dashboard";
+import Home from "./pages/Home";
+import Room from "./pages/Room";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (

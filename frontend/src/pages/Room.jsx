@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Button } from "flowbite-react";
-import { startQuizzSolo } from "../../services/quizzService";
+import { startQuizzSolo } from "../services/quizzService";
 
 const Room = () => {
   const [category, setCategory] = useState("");

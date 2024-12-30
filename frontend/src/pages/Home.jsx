@@ -1,4 +1,4 @@
-import { useAuthStore } from "../../zustand/store";
+import { useAuthStore } from "../zustand/store";
 
 const Home = () => {
   const { user } = useAuthStore();
