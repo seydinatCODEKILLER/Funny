@@ -22,7 +22,7 @@ export const useAuthStore = create(
     }),
     {
       name: "auth-store",
-      partialize: (state) => ({ user: state.user, token: state.token }),
+      partialize: (state) => ({ token: state.token }),
     }
   )
 );

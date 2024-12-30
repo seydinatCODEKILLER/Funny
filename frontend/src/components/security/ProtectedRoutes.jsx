@@ -1,27 +1,34 @@
 /* eslint-disable react/prop-types */
-import { Spinner } from "flowbite-react";
 import { useAuthStore } from "../../zustand/store";
 import { Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import useFetchUser from "../../hooks/useFetchUser";
+import LoaderPage from "../loader/LoaderPage";
 
 const ProtectedRoutes = ({ children }) => {
-  const { token, loading } = useAuthStore();
+  const { token, loading, setLoading, user } = useAuthStore();
   const { handleFetchUser } = useFetchUser();
-  useEffect(() => {
-    if (token) {
-      handleFetchUser(token);
+
+  const fetchUser = useCallback(async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      await handleFetchUser(token);
+    } finally {
+      setLoading(false);
     }
-  }, [token]);
+  }, [token, handleFetchUser, setLoading]);
+
+  useEffect(() => {
+    if (token && !user) {
+      fetchUser();
+    } else if (!token) {
+      setLoading(false);
+    }
+  }, [token, user, fetchUser, setLoading]);
+
   if (loading) {
-    return (
-      <div className="flex items-center justify-center">
-        <div className="flex items-center gap-4 min-h-screen">
-          <Spinner size="md" aria-label="Chargement en cours..." />
-          <p className="text-sm font-medium">Recuperation des donnees</p>
-        </div>
-      </div>
-    );
+    return <LoaderPage />;
   }
 
   return token ? children : <Navigate to="/login" replace />;

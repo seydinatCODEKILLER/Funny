@@ -1,25 +1,25 @@
 import { fetchUser } from "../services/userService";
 import { useAuthStore } from "../zustand/store";
+import { useCallback } from "react";
 
 const useFetchUser = () => {
-  const { login, setLoading } = useAuthStore();
+  const { login } = useAuthStore();
 
-  const handleFetchUser = async (token) => {
-    setLoading(true);
+  const handleFetchUser = useCallback(
+    async (token) => {
+      try {
+        const userData = await fetchUser(token);
+        login(userData, token);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des données utilisateur :",
+          error
+        );
+      }
+    },
+    [login]
+  );
 
-    setLoading(true);
-    try {
-      const userData = await fetchUser(token);
-      login(userData, token);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des données utilisateur :",
-        error
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
   return { handleFetchUser };
 };
 
