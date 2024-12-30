@@ -1,5 +1,6 @@
 import Quiz from "../models/quizModel.js";
 import errorHandler from "../utils/errorHandler.js";
+import axios from "axios";
 
 export const createQuiz = async (req, res, next) => {
   try {
@@ -7,11 +8,30 @@ export const createQuiz = async (req, res, next) => {
     if (!userId) {
       return next(errorHandler(401, "Unauthorized"));
     }
-    const quiz = await Quiz.create({
-      ...req.body,
-      createdBy: userId,
-    });
-    res.status(201).json({ message: "Quiz créé avec succès", quiz });
+    const { category, difficulty } = req.body;
+    const apiUrl = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`;
+    const response = await axios.get(apiUrl);
+
+    const questions = response.data.results.map((q) => ({
+      question: q.question,
+      options: [...q.incorrect_answers, q.correct_answer].sort(
+        () => Math.random() - 0.5
+      ),
+      correctAnswer: q.correct_answer,
+    }));
+
+    console.log(questions);
+    res.json(questions);
+
+    // const quiz = new Quiz({
+    //   title: `Quiz ${category} - ${difficulty}`,
+    //   category,
+    //   difficulty,
+    //   questions,
+    //   createdBy: userId,
+    // });
+    // await quiz.save();
+    // res.status(201).json({ message: "Quiz créé avec succès", quiz });
   } catch (error) {
     next(error);
   }

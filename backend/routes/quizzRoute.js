@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", getAllQuizs);
 router.get("/:id", getQuizById);
-router.post("/", security, createQuiz);
+router.post("/solo", security, createQuiz);
 router.put("/:id", security, updateQuiz);
 router.delete("/:id", security, deleteQuiz);
 
