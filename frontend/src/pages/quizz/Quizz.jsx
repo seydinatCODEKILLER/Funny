@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Modal } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const Quizz = () => {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleStartSolo = () => {
     setShowModal(true);
@@ -36,7 +38,7 @@ const Quizz = () => {
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
             onClick={() => {
-              console.log("Démarrage de la partie solo...");
+              navigate("/game/quiz/solo");
               setShowModal(false);
             }}
           >

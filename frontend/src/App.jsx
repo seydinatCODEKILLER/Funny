@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import Room from "./pages/Room";
 import Profile from "./pages/Profile";
 import Quizz from "./pages/quizz/Quizz";
+import SoloQuizz from "./pages/quizz/SoloQuizz";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="home" element={<Home />} />
             <Route path="game" element={<Room />} />
             <Route path="game/quiz" element={<Quizz />} />
+            <Route path="game/quiz/solo" element={<SoloQuizz />} />
             <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>

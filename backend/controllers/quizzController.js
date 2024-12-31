@@ -20,9 +20,6 @@ export const createQuiz = async (req, res, next) => {
       correctAnswer: q.correct_answer,
     }));
 
-    console.log(questions);
-    res.json(questions);
-
     const quiz = new Quiz({
       title: `Quiz ${category} - ${difficulty}`,
       category,
