@@ -7,7 +7,10 @@ import SidebarLink from "./SidebarLink";
 const DashboardSidebar = () => {
   const { logout } = useAuthStore();
   return (
-    <Sidebar aria-label="Dashboard Sidebar" className="h-full font-roboto">
+    <Sidebar
+      aria-label="Dashboard Sidebar"
+      className="h-screen fixed left-0 top-0 bg-gray-50 shadow-md"
+    >
       <div className="flex flex-col justify-between h-full">
         {/* Logo */}
         <div className="p-3">
@@ -29,10 +32,14 @@ const DashboardSidebar = () => {
             </SidebarLink>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
-
-        {/* {Footer} */}
-        <Button color="light" pill onClick={logout}>
-          <span>Deconnexion</span>
+        {/* Footer */}
+        <Button
+          color="light"
+          pill
+          onClick={logout}
+          className="m-3 text-sm text-gray-600"
+        >
+          Déconnexion
         </Button>
       </div>
     </Sidebar>
