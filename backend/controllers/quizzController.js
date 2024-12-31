@@ -23,15 +23,15 @@ export const createQuiz = async (req, res, next) => {
     console.log(questions);
     res.json(questions);
 
-    // const quiz = new Quiz({
-    //   title: `Quiz ${category} - ${difficulty}`,
-    //   category,
-    //   difficulty,
-    //   questions,
-    //   createdBy: userId,
-    // });
-    // await quiz.save();
-    // res.status(201).json({ message: "Quiz créé avec succès", quiz });
+    const quiz = new Quiz({
+      title: `Quiz ${category} - ${difficulty}`,
+      category,
+      difficulty,
+      questions,
+      createdBy: userId,
+    });
+    await quiz.save();
+    res.status(201).json({ message: "Quiz créé avec succès", quiz });
   } catch (error) {
     next(error);
   }
