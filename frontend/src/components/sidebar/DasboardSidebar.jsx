@@ -18,13 +18,13 @@ const DashboardSidebar = () => {
         {/* Navigation Links */}
         <Sidebar.Items className="flex flex-col text-lg">
           <Sidebar.ItemGroup>
-            <SidebarLink icon={RiHome3Line} href="/home">
+            <SidebarLink href="/home" icon={RiHome3Line}>
               Home
             </SidebarLink>
             <SidebarLink href="/profile" icon={RiProfileLine}>
               Profile
             </SidebarLink>
-            <SidebarLink href="/room" icon={TbGoGame}>
+            <SidebarLink href="/game" icon={TbGoGame}>
               Games
             </SidebarLink>
           </Sidebar.ItemGroup>

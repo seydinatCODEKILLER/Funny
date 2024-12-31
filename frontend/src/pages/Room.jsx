@@ -1,64 +1,18 @@
-import { useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { Button } from "flowbite-react";
-import { startQuizzSolo } from "../services/quizzService";
+import { useNavigate } from "react-router-dom";
+import CardGame from "../components/card/CardGame";
 
 const Room = () => {
-  const [category, setCategory] = useState("");
-  const [difficulty, setDifficulty] = useState("");
-  const [quiz, setQuiz] = useState(null);
-
-  const handleStartQuiz = async () => {
-    if (!category || !difficulty) {
-      toast.warning("Veuillez sélectionner une catégorie et une difficulté.");
-      return;
-    }
-
-    try {
-      const response = await startQuizzSolo({ category, difficulty });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-
-      toast.error(error.message);
-    }
-  };
-
+  const navigate = useNavigate();
   return (
-    <div className="quiz-container">
-      {!quiz ? (
-        <div>
-          <h1>Mode Solo</h1>
-          <select onChange={(e) => setCategory(e.target.value)}>
-            <option value="">Sélectionnez une catégorie</option>
-            <option value="Histoire">Histoire</option>
-            <option value="Sciences">Sciences</option>
-            <option value="Sport">Sport</option>
-          </select>
-
-          <select onChange={(e) => setDifficulty(e.target.value)}>
-            <option value="">Sélectionnez une difficulté</option>
-            <option value="facile">Facile</option>
-            <option value="moyen">Moyen</option>
-            <option value="difficile">Difficile</option>
-          </select>
-
-          <Button onClick={handleStartQuiz}>Commencer le Quiz</Button>
-        </div>
-      ) : (
-        <div>
-          <h2>{quiz.title}</h2>
-          {quiz.questions.map((q, index) => (
-            <div key={index}>
-              <p>{q.question}</p>
-              {q.options.map((option, i) => (
-                <button key={i}>{option}</button>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="font-roboto">
+      <h1 className="text-2xl font-bold mb-4">Mes Jeux</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <CardGame
+          title="Quizz"
+          description="Testez vos connaissances !"
+          onClick={() => navigate("/game/quiz")}
+        />
+      </div>
     </div>
   );
 };

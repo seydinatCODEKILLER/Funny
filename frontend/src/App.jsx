@@ -13,6 +13,7 @@ import Dashboard from "./Layout/Dashboard";
 import Home from "./pages/Home";
 import Room from "./pages/Room";
 import Profile from "./pages/Profile";
+import Quizz from "./pages/quizz/Quizz";
 
 const App = () => {
   return (
@@ -32,7 +33,8 @@ const App = () => {
           >
             <Route index element={<Navigate to="home" replace />} />
             <Route path="home" element={<Home />} />
-            <Route path="room" element={<Room />} />
+            <Route path="game" element={<Room />} />
+            <Route path="game/quiz" element={<Quizz />} />
             <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
