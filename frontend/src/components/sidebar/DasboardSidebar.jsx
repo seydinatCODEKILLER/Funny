@@ -1,6 +1,8 @@
 import { Button, Sidebar } from "flowbite-react";
 import { RiHome3Line, RiProfileLine } from "react-icons/ri";
+import { TbGoGame } from "react-icons/tb";
 import { useAuthStore } from "../../zustand/store";
+import SidebarLink from "./SidebarLink";
 
 const DashboardSidebar = () => {
   const { logout } = useAuthStore();
@@ -16,15 +18,15 @@ const DashboardSidebar = () => {
         {/* Navigation Links */}
         <Sidebar.Items className="flex flex-col text-lg">
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="/home" icon={RiHome3Line} active>
+            <SidebarLink icon={RiHome3Line} href="/home">
               Home
-            </Sidebar.Item>
-            <Sidebar.Item href="/profile" icon={RiProfileLine}>
+            </SidebarLink>
+            <SidebarLink href="/profile" icon={RiProfileLine}>
               Profile
-            </Sidebar.Item>
-            <Sidebar.Item href="/room" icon={RiProfileLine}>
-              Room
-            </Sidebar.Item>
+            </SidebarLink>
+            <SidebarLink href="/room" icon={TbGoGame}>
+              Games
+            </SidebarLink>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
 
