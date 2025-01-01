@@ -6,18 +6,22 @@ import useFetchUser from "../../hooks/useFetchUser";
 import LoaderPage from "../loader/LoaderPage";
 
 const ProtectedRoutes = ({ children }) => {
-  const { token, loading, setLoading, user } = useAuthStore();
+  const { token, loading, setLoading, user, logout, isTokenValid } =
+    useAuthStore();
   const { handleFetchUser } = useFetchUser();
 
   const fetchUser = useCallback(async () => {
-    if (!token) return;
+    if (!token || !isTokenValid()) {
+      logout();
+      return;
+    }
     setLoading(true);
     try {
       await handleFetchUser(token);
     } finally {
       setLoading(false);
     }
-  }, [token, handleFetchUser, setLoading]);
+  }, [token, isTokenValid, handleFetchUser, setLoading, logout]);
 
   useEffect(() => {
     if (token && !user) {
@@ -31,7 +35,7 @@ const ProtectedRoutes = ({ children }) => {
     return <LoaderPage />;
   }
 
-  return token ? children : <Navigate to="/login" replace />;
+  return token && isTokenValid() ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoutes;
