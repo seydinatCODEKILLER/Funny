@@ -9,7 +9,7 @@ const DashboardSidebar = () => {
   return (
     <Sidebar
       aria-label="Dashboard Sidebar"
-      className="h-screen fixed left-0 top-0 bg-gray-50 shadow-md"
+      className="h-screen  bg-gray-50 shadow-md"
     >
       <div className="flex flex-col justify-between h-full">
         {/* Logo */}

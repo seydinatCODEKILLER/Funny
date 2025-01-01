@@ -20,7 +20,7 @@ const Dashboard = () => {
     <div className="flex h-screen gap-3">
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-20 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-30 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:relative lg:translate-x-0 lg:w-64`}
       >
@@ -30,7 +30,7 @@ const Dashboard = () => {
       {/* Overlay for mobile sidebar */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-10 bg-black opacity-50 lg:hidden"
+          className="fixed inset-0 z-20 bg-black opacity-50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}
