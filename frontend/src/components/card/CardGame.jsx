@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Card } from "flowbite-react";
+import { Badge, Card } from "flowbite-react";
 
 const CardGame = ({ title, description, onClick, icon: Icon }) => {
   return (
@@ -13,12 +13,9 @@ const CardGame = ({ title, description, onClick, icon: Icon }) => {
       {/* Card content */}
       <Card className="relative bg-white shadow-md rounded-lg overflow-hidden">
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
+          <Badge color="info" icon={Icon}>
             {title}
-          </h3>
-          <div className="h-10 w-10 flex items-center justify-center text-lg">
-            <Icon />
-          </div>
+          </Badge>
         </div>
         <p className="text-gray-600 mt-2 group-hover:text-gray-800 transition-colors duration-300">
           {description}

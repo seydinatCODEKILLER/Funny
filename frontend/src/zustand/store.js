@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { jwtDecode } from "jwt-decode";
+import { isValidToken } from "../utils/validToken";
 
 export const useAuthStore = create(
   persist(
@@ -18,7 +19,6 @@ export const useAuthStore = create(
           loading: false,
         });
 
-        // Définir un timer pour déconnecter automatiquement après expiration
         const timeout = expiration - Date.now();
         if (timeout > 0) {
           setTimeout(() => {
@@ -34,12 +34,9 @@ export const useAuthStore = create(
       setLoading: (isLoading) => set({ loading: isLoading }),
       isTokenValid: () => {
         const { token } = get();
-        if (!token) return false;
-        try {
-          const decoded = jwtDecode(token);
-          return decoded.exp * 1000 > Date.now();
-        } catch (error) {
-          console.log(error);
+        if (isValidToken(token)) {
+          return true;
+        } else {
           return false;
         }
       },

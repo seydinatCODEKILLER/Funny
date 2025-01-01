@@ -14,19 +14,18 @@ const Room = () => {
         <div className="absolute w-72 h-72 bg-purple-300 rounded-full blur-3xl opacity-40 top-1/2 left-1/3 animate-float-slow"></div>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
         {/* Page Header */}
         <header className="text-center mb-12">
-          <h1 className="text-5xl font-extrabold text-indigo-700 drop-shadow-md">
-            Mes Jeux
+          <h1 className="text-4xl font-bold text-indigo-700 drop-shadow-sm">
+            Mes jeux
           </h1>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
+          <p className="text-md text-gray-600 mt-4 max-w-3xl mx-auto">
             Plongez dans notre collection captivante de jeux interactifs.
             Développez vos compétences tout en vous amusant. Sélectionnez votre
             défi et commencez à jouer dès maintenant !
           </p>
         </header>
-
         {/* Game Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
           <CardGame
