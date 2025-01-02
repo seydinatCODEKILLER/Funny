@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchQuizQuestions } from "../services/quizzService";
 
 const useStartQuizz = () => {
@@ -8,6 +8,8 @@ const useStartQuizz = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [questionTimeLeft, setQuestionTimeLeft] = useState(30);
+
   const startQuizz = async () => {
     setIsLoading(true);
     try {
@@ -20,16 +22,38 @@ const useStartQuizz = () => {
       setIsLoading(false);
     }
   };
+
   const handleAnswer = (isCorrect) => {
     if (isCorrect) setScore((prev) => prev + 1);
+    moveToNextQuestion();
+  };
 
+  const moveToNextQuestion = () => {
     const nextQuestionIndex = currentQuestionIndex + 1;
+
     if (nextQuestionIndex < questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
+      setQuestionTimeLeft(30);
     } else {
       setIsFinished(true);
     }
   };
+
+  useEffect(() => {
+    if (!isStarted || isFinished || questionTimeLeft <= 0) return;
+    const timer = setInterval(() => {
+      setQuestionTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isStarted, isFinished, questionTimeLeft]);
+
+  useEffect(() => {
+    if (questionTimeLeft <= 0) {
+      moveToNextQuestion();
+    }
+  }, [questionTimeLeft]);
+
   return {
     questions,
     currentQuestion: questions[currentQuestionIndex],
@@ -39,6 +63,7 @@ const useStartQuizz = () => {
     isFinished,
     startQuizz,
     handleAnswer,
+    questionTimeLeft,
   };
 };
 

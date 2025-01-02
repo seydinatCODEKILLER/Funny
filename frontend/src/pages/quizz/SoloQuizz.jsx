@@ -13,6 +13,7 @@ const SoloQuizz = () => {
     isFinished,
     startQuizz,
     handleAnswer,
+    questionTimeLeft,
   } = useStartQuizz();
 
   if (!isStarted) {
@@ -23,7 +24,13 @@ const SoloQuizz = () => {
     return <ResultScreen score={score} totalQuestions={questions.length} />;
   }
 
-  return <QuestionScreen question={currentQuestion} onAnswer={handleAnswer} />;
+  return (
+    <QuestionScreen
+      question={currentQuestion}
+      onAnswer={handleAnswer}
+      questionTimeLeft={questionTimeLeft}
+    />
+  );
 };
 
 export default SoloQuizz;

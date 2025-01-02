@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
-import { Button, TextInput } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { useState } from "react";
 import { BsStars } from "react-icons/bs";
+import OptionCard from "./OptionCard";
+import TimerCircle from "./TimerCircle";
 
-const QuestionScreen = ({ question, onAnswer }) => {
+const QuestionScreen = ({ question, onAnswer, questionTimeLeft }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelection = (option) => {
@@ -19,35 +21,29 @@ const QuestionScreen = ({ question, onAnswer }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-white to-gray-100 font-roboto px-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          {question.question}
-        </h3>
+        <div className="flex flex-col gap-3 items-center mb-6">
+          <h3 className="text-xl font-medium text-gray-800">
+            {question.question}
+          </h3>
+          {/* Timer Circle */}
+          <div className="flex justify-center mb-6">
+            <TimerCircle timeLeft={questionTimeLeft} maxTime={30} />
+          </div>
+        </div>
+        {/* Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {question.options.map((option, index) => (
-            <label
+            <OptionCard
               key={index}
-              className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-transform duration-300 ${
-                selectedOption === option
-                  ? "border-blue-600 bg-blue-50"
-                  : "border-gray-100  hover:scale-105 hover:shadow-md"
-              }`}
-            >
-              <TextInput
-                type="checkbox"
-                color="blue"
-                className=""
-                checked={selectedOption === option}
-                onChange={() => handleSelection(option)}
-              />
-              <span className="text-gray-800 font-medium text-center">
-                {option}
-              </span>
-            </label>
+              option={option}
+              selectedOption={selectedOption}
+              onSelectOption={handleSelection}
+            />
           ))}
         </div>
         <Button
           onClick={handleSubmit}
-          className="mt-6 w-full  text-lg font-bold  transition-transform duration-300 disabled:cursor-not-allowed"
+          className="mt-6 w-full text-lg font-bold transition-transform duration-300 disabled:cursor-not-allowed"
           disabled={selectedOption === null}
           gradientMonochrome="purple"
         >
