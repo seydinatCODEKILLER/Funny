@@ -8,8 +8,8 @@ export const createQuiz = async (req, res, next) => {
     if (!userId) {
       return next(errorHandler(401, "Unauthorized"));
     }
-    const { category, difficulty } = req.body;
-    const apiUrl = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`;
+    const { category, difficulty, nbQuestions } = req.body;
+    const apiUrl = `https://opentdb.com/api.php?amount=${nbQuestions}&category=${category}&difficulty=${difficulty}&type=multiple`;
     const response = await axios.get(apiUrl);
 
     const questions = response.data.results.map((q) => ({

@@ -10,10 +10,14 @@ const useStartQuizz = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [questionTimeLeft, setQuestionTimeLeft] = useState(30);
 
-  const startQuizz = async () => {
+  const startQuizz = async ({ difficulty, category, nbQuestions }) => {
     setIsLoading(true);
     try {
-      const response = await fetchQuizQuestions("21", "easy");
+      const response = await fetchQuizQuestions(
+        category,
+        difficulty,
+        nbQuestions
+      );
       setQuestions(response.quiz.questions);
       setIsStarted(true);
     } catch (error) {

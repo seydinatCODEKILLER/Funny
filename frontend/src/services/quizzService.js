@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../zustand/store";
 const API_URL = "http://localhost:3000/api/quizz";
 
-export const fetchQuizQuestions = async (category, difficulty) => {
+export const fetchQuizQuestions = async (category, difficulty, nbQuestions) => {
   try {
     const token = useAuthStore.getState().token;
 
@@ -11,6 +11,7 @@ export const fetchQuizQuestions = async (category, difficulty) => {
       {
         category,
         difficulty,
+        nbQuestions,
       },
       {
         headers: {
