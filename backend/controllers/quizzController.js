@@ -1,17 +1,29 @@
 import Quiz from "../models/quizModel.js";
 import errorHandler from "../utils/errorHandler.js";
+import Game from "../models/gameModel.js";
 import axios from "axios";
 
 export const createQuiz = async (req, res, next) => {
   try {
     const { userId } = req.user;
+    const { category, difficulty, nbQuestions } = req.body;
+
+    // Validation de l'utilisateur
     if (!userId) {
       return next(errorHandler(401, "Unauthorized"));
     }
-    const { category, difficulty, nbQuestions } = req.body;
+
+    // Vérification si le jeu existe
+    const game = await Game.findById("6776c0511e24f37ee7b8fdd8");
+    if (!game) {
+      return next(errorHandler(404, "Jeu non trouvé"));
+    }
+
+    // Construction de l'URL de l'API
     const apiUrl = `https://opentdb.com/api.php?amount=${nbQuestions}&category=${category}&difficulty=${difficulty}&type=multiple`;
     const response = await axios.get(apiUrl);
 
+    // Transformation des questions pour le modèle
     const questions = response.data.results.map((q) => ({
       question: q.question,
       options: [...q.incorrect_answers, q.correct_answer].sort(
@@ -20,16 +32,20 @@ export const createQuiz = async (req, res, next) => {
       correctAnswer: q.correct_answer,
     }));
 
+    // Création et sauvegarde du quiz
     const quiz = new Quiz({
       title: `Quiz ${category} - ${difficulty}`,
       category,
       difficulty,
       questions,
       createdBy: userId,
+      gameId: game._id,
     });
     await quiz.save();
+
     res.status(201).json({ message: "Quiz créé avec succès", quiz });
   } catch (error) {
+    console.error("Erreur lors de la création du quiz :", error);
     next(error);
   }
 };

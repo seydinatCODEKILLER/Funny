@@ -1,9 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import CardGame from "../components/card/CardGame";
 import { MdQuiz } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { fetchGame } from "../services/gameService";
 
 const Room = () => {
   const navigate = useNavigate();
+  const [games, setGames] = useState([]);
+  useEffect(() => {
+    const handleFetchGame = async () => {
+      try {
+        const response = await fetchGame();
+        const { jeux } = response;
+        setGames(jeux);
+        console.log(games);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleFetchGame();
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-white to-blue-100 overflow-hidden font-roboto">
@@ -28,12 +44,15 @@ const Room = () => {
         </header>
         {/* Game Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
-          <CardGame
-            title="Quizz"
-            description="Testez vos connaissances avec des milliers de questions captivantes !"
-            onClick={() => navigate("/game/quiz")}
-            icon={MdQuiz}
-          />
+          {games.map((game) => (
+            <CardGame
+              key={game._id}
+              title={game.name}
+              description={game.description}
+              onClick={() => navigate(`/game/${game.type}`)}
+              icon={MdQuiz}
+            />
+          ))}
           {/* Future games can be added here */}
         </div>
       </div>

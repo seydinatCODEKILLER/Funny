@@ -9,6 +9,7 @@ const useStartQuizz = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [questionTimeLeft, setQuestionTimeLeft] = useState(30);
+  const [gameId, setGameId] = useState("");
 
   const startQuizz = async ({ difficulty, category, nbQuestions }) => {
     setIsLoading(true);
@@ -19,6 +20,7 @@ const useStartQuizz = () => {
         nbQuestions
       );
       setQuestions(response.quiz.questions);
+      setGameId(response.quiz.gameId);
       setIsStarted(true);
     } catch (error) {
       console.error("Erreur lors du démarrage du quiz", error);
@@ -67,6 +69,7 @@ const useStartQuizz = () => {
     isFinished,
     startQuizz,
     handleAnswer,
+    gameId,
     questionTimeLeft,
   };
 };

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -23,11 +22,21 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
-  scores: [
+  gameScores: [
     {
-      quizId: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz" },
-      score: Number,
-      date: { type: Date, default: Date.now },
+      gameId: { type: mongoose.Schema.Types.ObjectId, ref: "Game" },
+      type: { type: String, enum: ["quiz", "guess", "tictactoe", "memory"] },
+      scores: [
+        {
+          score: Number,
+          date: { type: Date, default: Date.now },
+          mode: { type: String, enum: ["solo", "multiplayer"] },
+          duration: Number,
+          opponent: String,
+          result: { type: String, enum: ["win", "lose", "draw"] },
+          attempts: Number,
+        },
+      ],
     },
   ],
   createdAt: {

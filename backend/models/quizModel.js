@@ -43,6 +43,11 @@ const QuizSchema = new mongoose.Schema(
         },
       },
     ],
+    gameId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Game", // Référence au modèle Game
+      required: [true, "Le gameId du jeu est requis"],
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

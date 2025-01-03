@@ -13,6 +13,7 @@ const SoloQuizz = () => {
     isFinished,
     startQuizz,
     handleAnswer,
+    gameId,
     questionTimeLeft,
   } = useStartQuizz();
 
@@ -21,7 +22,13 @@ const SoloQuizz = () => {
   }
 
   if (isFinished) {
-    return <ResultScreen score={score} totalQuestions={questions.length} />;
+    return (
+      <ResultScreen
+        gameId={gameId}
+        score={score}
+        totalQuestions={questions.length}
+      />
+    );
   }
 
   return (

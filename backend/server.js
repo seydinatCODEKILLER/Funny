@@ -7,6 +7,7 @@ import configureSocket from "./config/socket.js";
 import authRouter from "./routes/authRoute.js";
 import quizzRouter from "./routes/quizzRoute.js";
 import userRouter from "./routes/userRoute.js";
+import gameRouter from "./routes/gameRoute.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -27,6 +28,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", authRouter);
 app.use("/api/quizz", quizzRouter);
 app.use("/api/users", userRouter);
+app.use("/api/games", gameRouter);
 
 //Middleware d'erreur
 app.use(errorMiddleware);
