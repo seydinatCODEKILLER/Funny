@@ -1,48 +1,53 @@
 import { Server } from "socket.io";
 
 const configureSocket = (server) => {
+  // Initialisation de Socket.IO
   const io = new Server(server, {
-    cors: { origin: "*" },
+    cors: {
+      origin: "*", // Remplacez par votre domaine pour des raisons de sécurité
+      methods: ["GET", "POST"],
+    },
   });
+
+  // Gestion des événements Socket.IO
   io.on("connection", (socket) => {
-    console.log(" Utilisateur connecté :", socket.id);
+    console.log(`Nouvelle connexion : ${socket.id}`);
 
-    // Créer une salle de quiz
-    socket.on("createRoom", (roomName) => {
-      socket.join(roomName);
-      console.log(`Salle créée : ${roomName}`);
-      socket.emit("roomCreated", { roomName });
+    // Rejoindre une partie
+    socket.on("joinGame", ({ gameCode, username }) => {
+      socket.join(gameCode);
+      console.log(`${username} a rejoint la partie ${gameCode}`);
+
+      // Notifiez les autres joueurs dans la même salle
+      socket.to(gameCode).emit("playerJoined", { username });
     });
 
-    // Rejoindre une salle de quiz
-    socket.on("joinRoom", (roomName) => {
-      const room = io.sockets.adapter.rooms.get(roomName);
-      if (room && room.size < 4) {
-        socket.join(roomName);
-        io.to(roomName).emit("roomJoined", {
-          message: `Un joueur a rejoint la salle ${roomName}.`,
-          playerId: socket.id,
-        });
-      } else {
-        socket.emit("roomError", "Salle pleine ou inexistante.");
-      }
+    // Départ d'un joueur
+    socket.on("leaveGame", ({ gameCode, username }) => {
+      socket.leave(gameCode);
+      console.log(`${username} a quitté la partie ${gameCode}`);
+
+      // Notifiez les autres joueurs dans la salle
+      socket.to(gameCode).emit("playerLeft", { username });
     });
 
-    // Synchroniser les questions
-    socket.on("startQuiz", ({ roomName, questions }) => {
-      io.to(roomName).emit("quizStarted", questions);
+    // Réception de réponses
+    socket.on("answer", ({ gameCode, username, answer }) => {
+      console.log(
+        `Réponse reçue de ${username} pour la partie ${gameCode}: ${answer}`
+      );
+
+      // Diffusez la réponse aux autres joueurs ou traitez-la côté serveur
+      io.to(gameCode).emit("playerAnswer", { username, answer });
     });
 
-    // Recevoir et diffuser les scores
-    socket.on("submitAnswer", ({ roomName, playerId, score }) => {
-      io.to(roomName).emit("updateScores", { playerId, score });
-    });
-
+    // Déconnexion
     socket.on("disconnect", () => {
-      console.log("Utilisateur déconnecté :", socket.id);
+      console.log(`Déconnexion du client : ${socket.id}`);
     });
   });
-  return io;
+
+  console.log("Socket.IO configuré avec succès");
 };
 
 export default configureSocket;
