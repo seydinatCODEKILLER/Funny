@@ -1,7 +1,7 @@
-import QuestionScreen from "../../components/game/quizz/QuestionScreen";
-import ResultScreen from "../../components/game/quizz/ResultScreen";
-import StartScreen from "../../components/game/quizz/StartScreen";
-import useStartQuizz from "../../hooks/useStartQuizz";
+import QuestionScreen from "../../../components/game/quizz/QuestionScreen";
+import ResultScreen from "../../../components/game/quizz/ResultScreen";
+import StartScreen from "../../../components/game/quizz/StartScreen";
+import useStartQuizz from "../../../hooks/useStartQuizz";
 
 const SoloQuizz = () => {
   const {

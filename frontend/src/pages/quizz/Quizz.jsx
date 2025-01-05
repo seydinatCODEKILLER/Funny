@@ -1,5 +1,7 @@
 import { Button } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { BiWorld } from "react-icons/bi";
+import { FaDesktop } from "react-icons/fa";
 
 const Quizz = () => {
   const navigate = useNavigate();
@@ -33,16 +35,18 @@ const Quizz = () => {
               aria-label="Commencer le mode solo"
             >
               Mode Solo
+              <FaDesktop className="ml-2" />
             </Button>
 
             {/* Mode Multijoueur Button (Disabled) */}
             <Button
               color="gray"
-              className="w-full py-3 text-lg font-semibold rounded-lg shadow-md cursor-not-allowed"
-              disabled
+              className="w-full py-3 text-lg font-semibold rounded-lg shadow-md"
               aria-label="Mode multijoueur (indisponible)"
+              onClick={() => navigate("/game/quiz/multijoueur")}
             >
-              Mode Multijoueur (à venir)
+              Mode Multijoueur
+              <BiWorld className="ml-2" />
             </Button>
           </div>
         </div>

@@ -28,3 +28,8 @@ export const saveScore = async (gameId, score, result) => {
   );
   return response.data;
 };
+
+export const fetchAllUsers = async () => {
+  const response = await axios.get(`${API_URL}`);
+  return response.data;
+};

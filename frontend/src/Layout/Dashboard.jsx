@@ -12,7 +12,7 @@ const Dashboard = () => {
   const { user, logOut } = useAuthStore();
 
   // Gestion des notifications
-  useNotification(message, clearMessage);
+  useNotification(message, clearMessage, "success");
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
